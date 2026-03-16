@@ -1,132 +1,133 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, Pressable } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, CheckBox } from "react-native";
 
 export default function App() {
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [isSelected, setSelection] = useState(false);
 
-  const handleUpdate = () => {
-    if (!password || !confirmPassword) {
-      Alert.alert("Error", "Completa todos los campos");
-      return;
-    }
-    if (password !== confirmPassword) {
-      Alert.alert("Error", "Las contraseñas no coinciden");
-      return;
-    }
-    if (!isSelected) {
-      Alert.alert("Error", "Debes aceptar los términos y condiciones");
-      return;
-    }
-    Alert.alert("Éxito", "Contraseña actualizada");
+  const [codigo, setCodigo] = useState(["", "", "", ""]);
+  const [aceptado, setAceptado] = useState(false);
+
+  const cambiarCodigo = (text, index) => {
+    let nuevo = [...codigo];
+    nuevo[index] = text;
+    setCodigo(nuevo);
   };
 
   return (
     <View style={styles.container}>
-      <View style={styles.formContainer}>
-        <Text style={styles.titulo}>Actualizacion de contraseña</Text>
 
-        <Text style={styles.label}>Contraseña</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Ingresa tu contraseña"
-          placeholderTextColor="#ccc"
-          secureTextEntry
-          value={password}
-          onChangeText={setPassword}
-        />
+      <Text style={styles.titulo}>Ingresa tu código</Text>
 
-        <Text style={styles.label}>Confirmar contraseña</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="confirma tu contraseña"
-          placeholderTextColor="#ccc"
-          secureTextEntry
-          value={confirmPassword}
-          onChangeText={setConfirmPassword}
-        />
-
-        <Pressable style={styles.checkboxContainer} onPress={() => setSelection(!isSelected)}>
-          <MaterialCommunityIcons 
-            name={isSelected ? "checkbox-marked" : "checkbox-blank-outline"} 
-            size={24} 
-            color="#003399" 
+      {/* INPUTS DEL CODIGO */}
+      <View style={styles.codigoContainer}>
+        {codigo.map((valor, index) => (
+          <TextInput
+            key={index}
+            style={styles.input}
+            maxLength={1}
+            keyboardType="numeric"
+            value={valor}
+            onChangeText={(text) => cambiarCodigo(text, index)}
           />
-          <Text style={styles.checkboxText}>
-            Acepto los <Text style={styles.link}>Términos de Servicio</Text> y <Text style={styles.link}>Políticas de Privacidad.</Text>
-          </Text>
-        </Pressable>
-
-        <TouchableOpacity style={styles.boton} onPress={handleUpdate}>
-          <Text style={styles.botonText}>Aceptar</Text>
-        </TouchableOpacity>
+        ))}
+        
       </View>
-      <StatusBar style="auto" />
+
+      {/* CHECKBOX */}
+      <View style={styles.checkContainer}>
+        <CheckBox
+          value={aceptado}
+          onValueChange={setAceptado}
+        />
+        <Text style={styles.textoCheck}>
+          Acepto los <Text style={styles.link}>Términos de Servicio</Text> y{" "}
+          <Text style={styles.link}>Políticas de Privacidad</Text>.
+        </Text>
+      </View>
+
+      {/* BOTON */}
+      <TouchableOpacity style={styles.boton}
+          onPress={()=> navigation.navigate("ActualizarPassword")}>
+
+        <Text style={styles.textoBoton}>Continuar</Text>
+      </TouchableOpacity>
+      
+
+      {/* TEXTO INFERIOR */}
+      <Text style={styles.descripcion}>
+        Hemos enviado un <Text style={styles.link}>código de verificación</Text> a tu correo electrónico.
+        Ingresa el código para continuar con el proceso de recuperación de tu contraseña.
+      </Text>
+
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    paddingHorizontal: 40,
-    justifyContent: 'center',
+
+  container:{
+    flex:1,
+    backgroundColor:"#fff",
+    alignItems:"center",
+    padding:30
+
   },
-  formContainer: {
-    width: '100%',
+
+  titulo:{
+    fontSize:22,
+    fontWeight:"bold",
+    marginBottom:20
   },
-  titulo: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 40,
+
+  codigoContainer:{
+    flexDirection:"row",
+    gap:10,
+    marginBottom:20
   },
-  label: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#003399',
-    marginBottom: 5,
+
+  input:{
+    width:50,
+    height:50,
+    borderWidth:1,
+    borderColor:"#ccc",
+    borderRadius:8,
+    textAlign:"center",
+    fontSize:20
   },
-  input: {
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
-    paddingVertical: 10,
-    marginBottom: 30,
-    fontSize: 16,
+
+  checkContainer:{
+    flexDirection:"row",
+    alignItems:"center",
+    marginBottom: 40
   },
-  checkboxContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 40,
+
+  textoCheck:{
+    flex:1,
+    marginLeft:5,
+    fontSize:13
   },
-  checkboxText: {
-    fontSize: 13,
-    color: '#333',
-    marginLeft: 10,
-    flex: 1,
+
+  link:{
+    color:"#000000"
   },
-  link: {
-    color: '#003399',
-    textDecorationLine: 'underline',
+
+  boton:{
+    backgroundColor:"#1f4db7",
+    padding:15,
+    borderRadius:8,
+    width:"80%",
+    alignItems:"center",
+    marginBottom:20
   },
-  boton: {
-    backgroundColor: "#003399",
-    paddingVertical: 15,
-    borderRadius: 8,
-    alignItems: 'center',
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 5,
+
+  textoBoton:{
+    color:"#fff",
+    fontWeight:"bold"
   },
-  botonText: {
-    color: "white",
-    fontSize: 18,
-    fontWeight: 'bold'
-  },
+
+  descripcion:{
+    fontSize:12,
+    textAlign:"center",
+    color:"#555"
+  }
+
 });

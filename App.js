@@ -54,7 +54,8 @@ export default function App() {
 
       {/* TEXTO INFERIOR */}
       <Text style={styles.descripcion}>
-        Hemos enviado un <Text style={styles.link}>código de verificación</Text> a tu correo electrónico.
+        Hemos enviado un <Text style={styles.link}>código de verificación a tu correo electrónico.{"\n"}
+    </Text> 
         Ingresa el código para continuar con el proceso de recuperación de tu contraseña.
       </Text>
 
@@ -81,7 +82,7 @@ const styles = StyleSheet.create({
   codigoContainer:{
     flexDirection:"row",
     gap:10,
-    marginBottom:20
+    marginBottom:25
   },
 
   input:{
@@ -97,21 +98,24 @@ const styles = StyleSheet.create({
   checkContainer:{
     flexDirection:"row",
     alignItems:"center",
-    marginBottom: 40
+    marginBottom: 40,
+    width: "80%"
   },
 
   textoCheck:{
     flex:1,
-    marginLeft:5,
+    marginLeft:10,
     fontSize:13
   },
 
   link:{
-    color:"#000000"
+    color:"#502fd3",
+    fontWeight: 'bold',
+    textAlign: 'right',
   },
 
   boton:{
-    backgroundColor:"#1f4db7",
+    backgroundColor:"#39A900",
     padding:15,
     borderRadius:8,
     width:"80%",
@@ -127,7 +131,12 @@ const styles = StyleSheet.create({
   descripcion:{
     fontSize:12,
     textAlign:"center",
-    color:"#555"
+    color:"#555",
+    // fontWeight: 'bold',
+    // fontWeight: 'bold',
+    textAlign: 'left',
+    marginLeft:30,
+    marginRight:40
   }
 
 });

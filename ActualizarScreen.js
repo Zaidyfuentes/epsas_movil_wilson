@@ -21,49 +21,61 @@ export default function ActualizarScreen({navigation}) {
       Alert.alert("Error", "Debes aceptar los términos y condiciones");
       return;
     }
-    Alert.alert("Éxito", "Contraseña actualizada", [
-    { text: "OK", onPress: () => navigation.navigate('Login') }
-  ]);
+    Alert.alert("Éxito", "Contraseña actualizada");
+    navigation.navigate('Login');
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.formContainer}>
-        <Text style={styles.titulo}>Actualizacion de contraseña</Text>
-
+        <Text style={styles.titulo}>
+          Actualización de contraseña
+        </Text>
+        {/* contraseña */}
         <Text style={styles.label}>Contraseña</Text>
         <TextInput
           style={styles.input}
           placeholder="Ingresa tu contraseña"
-          placeholderTextColor="#ccc"
+          placeholderTextColor="#cfcfcf"
           secureTextEntry
           value={password}
           onChangeText={setPassword}
         />
-
+        {/* confirmar */}
         <Text style={styles.label}>Confirmar contraseña</Text>
         <TextInput
           style={styles.input}
-          placeholder="confirma tu contraseña"
-          placeholderTextColor="#ccc"
+          placeholder="Confirma tu contraseña"
+          placeholderTextColor="#cfcfcf"
           secureTextEntry
           value={confirmarPassword}
           onChangeText={setConfirmarPassword}
         />
 
-        <Pressable style={styles.checkboxContainer} onPress={() => setSelection(!isSelected)}>
-          <MaterialCommunityIcons 
-            name={isSelected ? "checkbox-marked" : "checkbox-blank-outline"} 
-            size={24} 
-            color="#003399" 
+        {/* aceptar */}
+        <Pressable
+          style={styles.checkboxContainer}
+          onPress={() => setSelection(!isSelected)}
+        >
+          <MaterialCommunityIcons
+            name={isSelected ? "checkbox-marked" : "checkbox-blank-outline"}
+            size={22}
+            color="#2f6fed"
           />
           <Text style={styles.checkboxText}>
-            Acepto los <Text style={styles.link}>Términos de Servicio</Text> y <Text style={styles.link}>Políticas de Privacidad.</Text>
+            Acepto los <Text style={styles.link}>Términos de Servicio</Text> y{" "}
+            <Text style={styles.link}>Políticas de Privacidad.</Text>
           </Text>
         </Pressable>
 
-        <TouchableOpacity style={styles.boton} onPress={handleActualizar}>
-          <Text style={styles.botonText}>Aceptar</Text>
+        {/* boton */}
+        <TouchableOpacity
+          style={styles.boton}
+          onPress={handleActualizar}
+        >
+          <Text style={styles.botonText}>
+            Aceptar
+          </Text>
         </TouchableOpacity>
       </View>
       <StatusBar style="auto" />
@@ -72,63 +84,64 @@ export default function ActualizarScreen({navigation}) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    paddingHorizontal: 40,
-    justifyContent: 'center',
+  container:{
+    flex:1,
+    backgroundColor:"#fff",
+    justifyContent:"center",
+    paddingHorizontal:40
   },
-  formContainer: {
-    width: '100%',
+  formContainer:{
+    width:"100%"
   },
-  titulo: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 40,
+  titulo:{
+    fontSize:22,
+    fontWeight:"bold",
+    textAlign:"center",
+    marginBottom:40,
+    color:"#333"
   },
-  label: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#003399',
-    marginBottom: 5,
+  label:{
+    fontSize:14,
+    fontWeight:"bold",
+    color:"#2f6fed",
+    marginBottom:5
   },
-  input: {
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
-    paddingVertical: 10,
-    marginBottom: 30,
-    fontSize: 16,
+  input:{
+    borderBottomWidth:1,
+    borderBottomColor:"#ddd",
+    paddingVertical:10,
+    marginBottom:30,
+    fontSize:15
   },
-  checkboxContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 40,
+  checkboxContainer:{
+    flexDirection:"row",
+    alignItems:"center",
+    marginBottom:35
   },
-  checkboxText: {
-    fontSize: 13,
-    color: '#333',
-    marginLeft: 10,
-    flex: 1,
+  checkboxText:{
+    fontSize:13,
+    marginLeft:10,
+    color:"#333",
+    flex:1
   },
-  link: {
-    color: '#003399',
-    textDecorationLine: 'underline',
+  link:{
+    color:"#2f6fed",
+    fontWeight:"bold"
   },
-  boton: {
-    backgroundColor: "#003399",
-    paddingVertical: 15,
-    borderRadius: 8,
-    alignItems: 'center',
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 5,
+  boton:{
+    backgroundColor:"#6bb64a",
+    paddingVertical:14,
+    borderRadius:8,
+    alignItems:"center",
+    shadowColor:"#000",
+    shadowOpacity:0.2,
+    shadowOffset:{width:0,height:2},
+    shadowRadius:4,
+    elevation:3
   },
-  botonText: {
-    color: "white",
-    fontSize: 18,
-    fontWeight: 'bold'
-  },
+  botonText:{
+    color:"#fff",
+    fontSize:16,
+    fontWeight:"bold"
+  }
 });

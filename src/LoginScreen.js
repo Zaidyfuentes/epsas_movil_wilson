@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity,  StyleSheet, Image, KeyboardAvoidingView, Platform,  ScrollView, StatusBar,} from 'react-native';
+import { View, Text, TextInput, TouchableOpacity,  StyleSheet, Image, KeyboardAvoidingView, Platform,  ScrollView, StatusBar, } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function LoginScreen({ navigation }) {
@@ -9,11 +9,12 @@ export default function LoginScreen({ navigation }) {
 
   const handleLogin = () => {
     console.log('Iniciando sesión con:', email, password);
+    navigation.navigate('Bitacoras');
   };
 
   const handleForgotPassword = () => {
     console.log('Recuperar contraseña');
-    navigation.navigate('Actualizar');
+    navigation.navigate('Correo');
   };
 
   return (
@@ -27,22 +28,22 @@ export default function LoginScreen({ navigation }) {
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
       >
-        {/* Logo EPSAS */}
+        {/* logo epsas */}
         <View style={styles.logoContainer}>
           <Image
-            source={require('./assets/logo.png')}
+            source={require('../assets/logo.png')}
             style={styles.logo}
             resizeMode="contain"
           />
         </View>
 
-        {/* Título */}
-        <Text style={styles.title}>Inicio de sesion</Text>
+        {/* titulo */}
+        <Text style={styles.title}>Inicio de sesión</Text>
         <Text style={styles.subtitle}>¡Hola de nuevo! que gusto verte de nuevo.</Text>
 
-        {/* Formulario */}
+        {/* formulario */}
         <View style={styles.form}>
-          {/* Campo Correo */}
+          {/* Correo */}
           <View style={styles.inputGroup}>
             <Text style={styles.label}>Correo</Text>
             <TextInput
@@ -57,7 +58,7 @@ export default function LoginScreen({ navigation }) {
             />
           </View>
 
-          {/* Campo Contraseña */}
+          {/* contraseña */}
           <View style={styles.inputGroup}>
             <Text style={styles.label}>Contraseña</Text>
             <View style={styles.passwordContainer}>
@@ -79,12 +80,12 @@ export default function LoginScreen({ navigation }) {
             </View>
           </View>
 
-          {/* Botón de inicio */}
+          {/* boton de inicio */}
           <TouchableOpacity style={styles.loginButton} onPress={handleLogin} activeOpacity={0.85}>
             <Text style={styles.loginButtonText}>Inicio</Text>
           </TouchableOpacity>
 
-          {/* Olvidaste tu contraseña */}
+          {/* olvidaste tu contraseña */}
           <TouchableOpacity onPress={handleForgotPassword} style={styles.forgotContainer}>
             <Text style={styles.forgotText}>¿Olvidaste tu contraseña?</Text>
           </TouchableOpacity>

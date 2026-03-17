@@ -2,16 +2,16 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import LoginScreen from './LoginScreen';
-import RecuContraScreen from './RecuContraScreen';
-import CodigoScreen from './CodigoScreen';
-import ActualizarScreen from './ActualizarScreen';
-import CorreoScreen from './CorreoScreen';
-import BitacorasScreen from './BitacorasScreen';
-import EstBitacoraScreen from './EstBitacoraScreen';
-import SubirBitScreen from './SubirBitScreen';
-import PerfilScreen from './PerfilScreen';
-import EditarPerfilScreen from './EdiPerfil';
+import LoginScreen from './src/LoginScreen';
+import RecuContraScreen from './src/RecuContraScreen';
+import CodigoScreen from './src/CodigoScreen';
+import ActualizarScreen from './src/ActualizarScreen';
+import CorreoScreen from './src/CorreoScreen';
+import BitacorasScreen from './src/BitacorasScreen';
+import EstBitacoraScreen from './src/EstBitacoraScreen';
+import SubirBitScreen from './src/SubirBitScreen';
+import PerfilScreen from './src/PerfilScreen';
+import EditarPerfilScreen from './src/EdiPerfil';
 
 const Stack = createStackNavigator();
 

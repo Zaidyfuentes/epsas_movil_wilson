@@ -11,6 +11,7 @@ import BitacorasScreen from './BitacorasScreen';
 import EstBitacoraScreen from './EstBitacoraScreen';
 import SubirBitScreen from './SubirBitScreen';
 import PerfilScreen from './PerfilScreen';
+import EditarPerfilScreen from './EdiPerfil';
 
 const Stack = createStackNavigator();
 
@@ -27,6 +28,7 @@ export default function App() {
                 <Stack.Screen name="EstBitacora" component={EstBitacoraScreen}/>
                 <Stack.Screen name="Subir" component={SubirBitScreen}/>
                 <Stack.Screen name="Perfil" component={PerfilScreen}/>
+                <Stack.Screen name="Editar" component={EditarPerfilScreen}/>
             </Stack.Navigator>
         </NavigationContainer>
     );

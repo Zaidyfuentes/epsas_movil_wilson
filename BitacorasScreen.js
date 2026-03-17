@@ -61,10 +61,10 @@ export default function BitacorasScreen({navigation}) {
                     </TouchableOpacity>
 
                     {/* agregar*/}
-                    <TouchableOpacity style={styles.cardGris}>
+                    <TouchableOpacity style={styles.cardGris} onPress={() => navigation.navigate("Bitacoras")}>
                         <MaterialCommunityIcons name="plus" size={40} color="#bfc3c7"/>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.cardGris}>
+                    <TouchableOpacity style={styles.cardGris} onPress={() => navigation.navigate("Bitacoras")}>
                         <MaterialCommunityIcons name="plus" size={40} color="#bfc3c7"/>
                     </TouchableOpacity>
                 </View>

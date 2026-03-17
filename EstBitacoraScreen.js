@@ -15,10 +15,6 @@ export default function EstBitacoraScreen({navigation}) {
                 <Text style={styles.titulo}>
                     Estado de la Bitacora
                 </Text>
-    
-                <TouchableOpacity>
-                    <MaterialCommunityIcons name="plus" size={26} color="#1e4ea1"/>
-                </TouchableOpacity>
             </View>
 
             {/* estado bitacora */}
@@ -88,7 +84,7 @@ const styles = StyleSheet.create({
     header:{
         flexDirection:"row",
         alignItems:"center",
-        justifyContent:"space-between",
+        justifyContent:"flex-start",
         marginBottom:30
     },
     titulo:{

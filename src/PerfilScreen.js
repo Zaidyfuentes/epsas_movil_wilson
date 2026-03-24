@@ -10,7 +10,12 @@ export default function PerfilScreen({ navigation }) {
 
     const handleCambiarPassword = () => {
         console.log('Cambiar Contraseña');
+        navigation.navigate('Actualizar');
     };
+
+    const handleVerEtapa = () => {
+    navigation.navigate('Etapa');
+};
 
     return (
         <View style={styles.container}>
@@ -20,9 +25,7 @@ export default function PerfilScreen({ navigation }) {
                     <TouchableOpacity onPress={() => navigation.goBack()}>
                         <MaterialCommunityIcons name="arrow-left" size={26} color="#1E4FA1" />
                     </TouchableOpacity>
-
                     <Text style={styles.title}>Perfil</Text>
-
                     <View style={{ width: 26 }} />
                 </View>
 
@@ -33,11 +36,6 @@ export default function PerfilScreen({ navigation }) {
                             source={{ uri: "https://i.pravatar.cc/150" }}
                             style={styles.image}
                         />
-
-                        {/* BOTÓN EDITAR FOTO */}
-                        <TouchableOpacity style={styles.editIcon}>
-                            <MaterialCommunityIcons name="pencil" size={16} color="#fff" />
-                        </TouchableOpacity>
                     </View>
 
                     <Text style={styles.name}>Aprendiz SENA</Text>
@@ -48,6 +46,7 @@ export default function PerfilScreen({ navigation }) {
                 <View style={styles.options}>
                     <OptionItem icon="account-edit" text="Editar perfil" onPress={handleEditarPerfil}/>
                     <OptionItem icon="lock-outline" text="Cambiar contraseña" onPress={handleCambiarPassword}/>
+                    <OptionItem icon="progress-check" text="Ver etapa practica" onPress={handleVerEtapa}/>
                 </View>
 
                 {/* BOTÓN CERRAR SESIÓN */}

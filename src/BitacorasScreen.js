@@ -1,66 +1,77 @@
 import React, { useState } from "react";
-import {View,Text,StyleSheet,TouchableOpacity,ScrollView,Modal,Pressable} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Modal, Pressable } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function BitacorasScreen({ navigation }) {
     const [menuVisible, setMenuVisible] = useState(false);
     const [menuPos, setMenuPos] = useState({ x: 0, y: 0 });
+
     const abrirMenu = (event) => {
         const { pageX, pageY } = event.nativeEvent;
+        // Ajuste de X e Y para evitar que el menú se salga de pantalla
         setMenuPos({ x: pageX, y: pageY });
         setMenuVisible(true);
     };
 
     return (
         <View style={styles.container}>
-            <ScrollView>
-                <Text style={styles.titulo}>Bitacoras</Text>
+            <View style={styles.headerContainer}>
+                <Text style={styles.titulo}>Bitácoras</Text>
                 <Text style={styles.subtitulo}>¡Hola Aprendiz!</Text>
+            </View>
 
-                <View style={styles.grid}>
-
-                    {/* bitacoras */}
-                    {[1, 2, 3, 4].map((num) => (
-                        <TouchableOpacity
-                            key={num}
-                            style={styles.cardAzul}
-                            onPress={() => navigation.navigate("EstBitacora")}
-                        >
+            <ScrollView 
+                contentContainerStyle={styles.scrollContent}
+                showsVerticalScrollIndicator={false}
+            >
+                {/* Lista de Registros de Bitácoras */}
+                {[1, 2, 3, 4].map((num) => (
+                    <TouchableOpacity
+                        key={num}
+                        style={styles.cardBitacora}
+                        onPress={() => navigation.navigate("EstBitacora")}
+                    >
+                        <View style={styles.iconContainer}>
                             <MaterialCommunityIcons
                                 name="file-document-outline"
-                                size={40}
-                                color="#fff"
+                                size={32}
+                                color="#1e4ea1"
                             />
+                        </View>
+                        
+                        <View style={styles.infoContainer}>
+                            <Text style={styles.cardTitle}>Registro N° {num}</Text>
+                            <Text style={styles.cardStatus}>
+                                Estado: <Text style={styles.statusSuccess}>Aprobada</Text>
+                            </Text>
+                        </View>
 
-                            {/* botón 3 puntos */}
-                            <TouchableOpacity
-                                style={styles.tresP}
-                                onPress={abrirMenu}
-                                hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-                            >
-                                <MaterialCommunityIcons
-                                    name="dots-vertical"
-                                    size={20}
-                                    color="#fff"
-                                />
-                            </TouchableOpacity>
+                        {/* botón 3 puntos */}
+                        <TouchableOpacity
+                            style={styles.tresP}
+                            onPress={abrirMenu}
+                            hitSlop={{ top: 15, bottom: 15, left: 15, right: 15 }}
+                        >
+                            <MaterialCommunityIcons
+                                name="dots-vertical"
+                                size={24}
+                                color="#7A7A7A"
+                            />
                         </TouchableOpacity>
-                    ))}
+                    </TouchableOpacity>
+                ))}
 
-                    {/* cards para agregar */}
-                    <TouchableOpacity
-                        style={styles.cardGris}
-                        onPress={() => navigation.navigate("Bitacoras")}
-                    >
-                        <MaterialCommunityIcons name="plus" size={40} color="#bfc3c7" />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.cardGris}
-                        onPress={() => navigation.navigate("Bitacoras")}
-                    >
-                        <MaterialCommunityIcons name="plus" size={40} color="#bfc3c7" />
-                    </TouchableOpacity>
-                </View>
+                {/* Card para registrar nueva bitácora */}
+                <TouchableOpacity
+                    style={styles.cardAgregar}
+                    onPress={() => navigation.navigate("SubirBit")}
+                >
+                    <MaterialCommunityIcons name="plus-circle-outline" size={32} color="#8EA7C9" />
+                    <Text style={styles.textAgregar}>Registrar Nueva Bitácora</Text>
+                </TouchableOpacity>
+                
+                {/* Espaciador inferior para SafeArea y Navbar */}
+                <View style={{ height: 100 }} />
             </ScrollView>
 
             {/* menu de opciones */}
@@ -70,10 +81,8 @@ export default function BitacorasScreen({ navigation }) {
                 animationType="fade"
                 onRequestClose={() => setMenuVisible(false)}
             >
-                {/* capa para cerrar al tocar fuera */}
                 <Pressable style={styles.overlay} onPress={() => setMenuVisible(false)}>
                     <View style={[styles.menu, { top: menuPos.y - 10, left: menuPos.x - 170 }]}>
-
                         <TouchableOpacity
                             style={styles.menuOpcion}
                             onPress={() => {
@@ -108,52 +117,90 @@ export default function BitacorasScreen({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#fff",
+        backgroundColor: "#F2F2F2",
+    },
+    headerContainer: {
         paddingHorizontal: 25,
-        paddingTop: 60
+        paddingTop: 60,
+        backgroundColor: "#F2F2F2",
+        paddingBottom: 10,
     },
     titulo: {
-        fontSize: 24,
+        fontSize: 26,
         fontWeight: "bold",
-        color: "#333",
+        color: "#1e4ea1",
         marginBottom: 5
     },
     subtitulo: {
         fontSize: 16,
         color: "#555",
-        marginBottom: 25
+        fontWeight: "500"
     },
-    grid: {
+    scrollContent: {
+        paddingHorizontal: 25,
+        paddingTop: 10
+    },
+    cardBitacora: {
         flexDirection: "row",
-        flexWrap: "wrap",
-        justifyContent: "space-between"
+        alignItems: "center",
+        backgroundColor: "#fff",
+        borderRadius: 16,
+        marginBottom: 15,
+        padding: 18,
+        shadowColor: "#000",
+        shadowOpacity: 0.05,
+        shadowRadius: 10,
+        shadowOffset: { width: 0, height: 4 },
+        elevation: 3,
     },
-    cardAzul: {
-        width: "47%",
-        height: 120,
-        backgroundColor: "#1e4ea1",
-        borderRadius: 20,
-        marginBottom: 20,
+    iconContainer: {
+        width: 55,
+        height: 55,
+        borderRadius: 12,
+        backgroundColor: "#EEF4FC",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        marginRight: 15
     },
-    cardGris: {
-        width: "47%",
-        height: 120,
-        backgroundColor: "#e5e5e5",
-        borderRadius: 20,
-        marginBottom: 20,
-        justifyContent: "center",
-        alignItems: "center"
+    infoContainer: {
+        flex: 1,
+        justifyContent: "center"
     },
-    // 3 puntos
+    cardTitle: {
+        fontSize: 17,
+        fontWeight: "bold",
+        color: "#333",
+        marginBottom: 4
+    },
+    cardStatus: {
+        fontSize: 14,
+        color: "#777"
+    },
+    statusSuccess: {
+        color: "#6bb64a",
+        fontWeight: "bold"
+    },
     tresP: {
-        position: "absolute",
-        top: 8,
-        right: 8,
-        padding: 4,
+        padding: 5,
     },
-    // menú de opciones
+    cardAgregar: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#E6E6E6",
+        borderRadius: 16,
+        padding: 20,
+        marginTop: 5,
+        borderWidth: 2,
+        borderColor: "#D1D9E6",
+        borderStyle: "dashed",
+    },
+    textAgregar: {
+        fontSize: 16,
+        fontWeight: "bold",
+        color: "#8EA7C9",
+        marginLeft: 10,
+    },
     overlay: {
         flex: 1,
     },
@@ -181,23 +228,23 @@ const styles = StyleSheet.create({
         color: "#333",
         marginLeft: 6,
     },
-    separador: {
-        height: 1,
-        backgroundColor: "#f0f0f0",
-        marginHorizontal: 10,
-    },
     navbar: {
         position: "absolute",
         bottom: 0,
         left: 0,
         right: 0,
         height: 80,
-        backgroundColor: "#f5f5f5",
+        backgroundColor: "#fff",
         flexDirection: "row",
         justifyContent: "space-around",
         alignItems: "center",
         borderTopWidth: 1,
-        borderColor: "#eee"
+        borderColor: "#eee",
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: -4 },
+        shadowOpacity: 0.05,
+        shadowRadius: 10,
+        elevation: 10,
     },
     botonCentral: {
         width: 60,
@@ -206,6 +253,11 @@ const styles = StyleSheet.create({
         backgroundColor: "#1e4ea1",
         justifyContent: "center",
         alignItems: "center",
-        marginTop: -25
+        marginTop: -30,
+        shadowColor: "#1e4ea1",
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.4,
+        shadowRadius: 6,
+        elevation: 8,
     }
 });

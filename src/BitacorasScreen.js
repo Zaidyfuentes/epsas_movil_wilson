@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Modal, Pressable } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { BitacoraContext } from "./BitacorasContext";
 
 export default function BitacorasScreen({ navigation }) {
     const [menuVisible, setMenuVisible] = useState(false);
     const [menuPos, setMenuPos] = useState({ x: 0, y: 0 });
+    const { bitacoras, eliminarBitacora } = useContext(BitacoraContext);
+    const [selectedBitacora, setSelectedBitacora] = useState(null);
 
-    const abrirMenu = (event) => {
+    const abrirMenu = (event, item) => {
         const { pageX, pageY } = event.nativeEvent;
+        setSelectedBitacora(item);
         // Ajuste de X e Y para evitar que el menú se salga de pantalla
         setMenuPos({ x: pageX, y: pageY });
         setMenuVisible(true);
@@ -24,47 +28,38 @@ export default function BitacorasScreen({ navigation }) {
                 contentContainerStyle={styles.scrollContent}
                 showsVerticalScrollIndicator={false}
             >
-                {/* Lista de Registros de Bitácoras */}
-                {[1, 2, 3, 4].map((num) => (
+                {/* 4. Mapear la lista real desde el contexto */}
+                {bitacoras.map((item) => (
                     <TouchableOpacity
-                        key={num}
+                        key={item.id}
                         style={styles.cardBitacora}
-                        onPress={() => navigation.navigate("EstBitacora")}
+                        onPress={() => navigation.navigate("EstBitacora", { bitacoraData: item })}
                     >
                         <View style={styles.iconContainer}>
-                            <MaterialCommunityIcons
-                                name="file-document-outline"
-                                size={32}
-                                color="#1e4ea1"
-                            />
+                            <MaterialCommunityIcons name="file-document-outline" size={32} color="#1e4ea1" />
                         </View>
                         
                         <View style={styles.infoContainer}>
-                            <Text style={styles.cardTitle}>Registro N° {num}</Text>
+                            <Text style={styles.cardTitle}>Registro N° {item.numero}</Text>
                             <Text style={styles.cardStatus}>
-                                Estado: <Text style={styles.statusSuccess}>Aprobada</Text>
+                                Estado: <Text style={item.estado === "Aprobada" ? styles.statusSuccess : {color: '#E67E22'}}>{item.estado}</Text>
                             </Text>
                         </View>
 
                         {/* botón 3 puntos */}
-                        <TouchableOpacity
-                            style={styles.tresP}
-                            onPress={abrirMenu}
-                            hitSlop={{ top: 15, bottom: 15, left: 15, right: 15 }}
-                        >
-                            <MaterialCommunityIcons
-                                name="dots-vertical"
-                                size={24}
-                                color="#7A7A7A"
-                            />
+                        <TouchableOpacity 
+                        style={styles.tresP} 
+                        onPress={(event) => abrirMenu(event, item)}>
+                            <MaterialCommunityIcons name="dots-vertical" size={24} color="#7A7A7A" />
                         </TouchableOpacity>
+                        
                     </TouchableOpacity>
                 ))}
 
                 {/* Card para registrar nueva bitácora */}
                 <TouchableOpacity
                     style={styles.cardAgregar}
-                    onPress={() => navigation.navigate("SubirBit")}
+                    onPress={() => navigation.navigate("Subir")}
                 >
                     <MaterialCommunityIcons name="plus-circle-outline" size={32} color="#8EA7C9" />
                     <Text style={styles.textAgregar}>Registrar Nueva Bitácora</Text>
@@ -93,6 +88,20 @@ export default function BitacorasScreen({ navigation }) {
                             <MaterialCommunityIcons name="briefcase-outline" size={18} color="#1e4ea1" />
                             <Text style={[styles.menuTexto, { color: "#1e4ea1" }]}>Ver etapa práctica</Text>
                         </TouchableOpacity>
+
+                        {/* 5. OPCIÓN ELIMINAR: Solo si el estado es 'Pendiente' */}
+                        {selectedBitacora?.estado === "Pendiente" && (
+                            <TouchableOpacity
+                                style={[styles.menuOpcion, { borderTopWidth: 1, borderTopColor: '#eee' }]}
+                                onPress={() => {
+                                    eliminarBitacora(selectedBitacora.id);
+                                    setMenuVisible(false);
+                                }}
+                            >
+                                <MaterialCommunityIcons name="trash-can-outline" size={18} color="#FF5252" />
+                                <Text style={[styles.menuTexto, { color: "#FF5252" }]}>Eliminar registro</Text>
+                            </TouchableOpacity>
+                        )}
                     </View>
                 </Pressable>
             </Modal>

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Animated } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-// Componente reutilizable de tarjeta de info
 function InfoCard({ icon, label, children, iconBg }) {
     return (
         <View style={styles.infoCard}>
@@ -17,8 +16,9 @@ function InfoCard({ icon, label, children, iconBg }) {
     );
 }
 
-export default function EstBitacoraScreen({ navigation }) {
+export default function EstBitacoraScreen({ navigation, route }) {
     const [expandObs, setExpandObs] = useState(false);
+    const { bitacoraData } = route.params || {};
 
     return (
         <View style={styles.container}>
@@ -44,7 +44,7 @@ export default function EstBitacoraScreen({ navigation }) {
                     <View style={styles.heroIconWrap}>
                         <MaterialCommunityIcons name="file-document-check-outline" size={42} color="#1e4ea1" />
                     </View>
-                    <Text style={styles.heroTitle}>Registro N° 1</Text>
+                    <Text style={styles.heroTitle}>Registro N° {bitacoraData?.numero || "1"}</Text>
                     <View style={styles.estadoBadge}>
                         <MaterialCommunityIcons name="check-circle" size={16} color="#fff" />
                         <Text style={styles.estadoBadgeText}>Aprobada</Text>
@@ -55,7 +55,7 @@ export default function EstBitacoraScreen({ navigation }) {
                 <Text style={styles.sectionLabel}>Información de la bitácora</Text>
 
                 <InfoCard icon="file-document-outline" label="Nombre del archivo" iconBg="#EEF4FC">
-                    <Text style={styles.infoCardValue}>g.jabgangkjghgjh</Text>
+                    <Text style={styles.infoCardValue}>{bitacoraData?.nombreArchivo || "Sin nombre"}</Text>
                 </InfoCard>
 
                 <InfoCard icon="calendar-check-outline" label="Fecha de entrega" iconBg="#EEF4FC">
@@ -63,7 +63,9 @@ export default function EstBitacoraScreen({ navigation }) {
                 </InfoCard>
 
                 <InfoCard icon="account-check-outline" label="Revisado por" iconBg="#EEF4FC">
-                    <Text style={styles.infoCardValue}>Instructor Wilson</Text>
+                    <Text style={styles.infoCardValue}> 
+                        {route.params?.bitacoraData?.instructor || "No asignado"} 
+                    </Text>
                 </InfoCard>
 
                 {/* OBSERVACIONES */}
@@ -77,7 +79,9 @@ export default function EstBitacoraScreen({ navigation }) {
                         <View style={styles.infoCardIcon}>
                             <MaterialCommunityIcons name="comment-text-outline" size={22} color="#1e4ea1" />
                         </View>
-                        <Text style={styles.observacionesTitle}>Observaciones</Text>
+                        <Text style={styles.observacionesTexto}>
+                            {bitacoraData?.observaciones || "No hay observaciones registradas."}
+                        </Text>
                         <MaterialCommunityIcons
                             name={expandObs ? "chevron-up" : "chevron-down"}
                             size={22}
@@ -102,7 +106,11 @@ export default function EstBitacoraScreen({ navigation }) {
 
             {/* NAVBAR */}
             <View style={styles.navbar}>
-                <MaterialCommunityIcons name="home-outline" size={26} color="#888" />
+                <TouchableOpacity
+                    onPress={() => navigation.navigate("Bitacoras")}
+                >
+                    <MaterialCommunityIcons name="home-outline" size={26} color="#888" />
+                </TouchableOpacity>
                 <TouchableOpacity
                     style={styles.botonCentral}
                     onPress={() => navigation.navigate("Subir")}
